@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Restoran - Platoo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/css/catalog.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <button class="btn-back" onclick="window.location.href='dashboard-pembeli.html'">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <div class="nav-info">
+                <h1 class="restaurant-name" id="restaurantName">Memuat...</h1>
+                <div class="restaurant-meta">
+                    <span class="rating" id="restaurantRating">⭐ 0.0</span>
+                    <span class="divider">•</span>
+                    <span class="address" id="restaurantAddress">-</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Restaurant Header -->
+    <section class="restaurant-header">
+        <div class="header-image" id="headerImage">
+            <div class="header-overlay"></div>
+        </div>
+        <div class="header-content">
+            <div class="container">
+                <div class="header-info">
+                    <h2 id="headerName">Nama Restoran</h2>
+                    <div class="header-details">
+                        <span id="headerRating">⭐ 0.0</span>
+                        <span class="divider">•</span>
+                        <span id="headerPhone">📞 -</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <main class="main-content">
+        <div class="container">
+            <div class="menu-header">
+                <h2>Menu Tersedia</h2>
+                <p class="menu-subtitle">Pilih menu favoritmu dan bantu kurangi food waste!</p>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading-state" id="loadingState">
+                <div class="loading-spinner"></div>
+                <p>Memuat menu...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon">🍽️</div>
+                <h3>Belum Ada Menu</h3>
+                <p>Restoran ini belum menambahkan menu</p>
+            </div>
+
+            <!-- Menu Grid -->
+            <div class="menu-grid" id="menuGrid"></div>
+        </div>
+    </main>
+
+    <!-- Floating Checkout Button will be added dynamically by JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/src/js/catalog.js"></script>
+</body>
+</html>

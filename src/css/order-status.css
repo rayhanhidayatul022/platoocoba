@@ -1,0 +1,521 @@
+/* Reset & Base */
+:root {
+    --purple-dark: #4B0082;
+    --purple-medium: #6B1199;
+    --purple-light: #D8B5E8;
+    --cream: #E9DEC7;
+    --white: #FFFFFF;
+    --text-dark: #2C2C2C;
+    --text-light: #666666;
+    --text-lighter: #999999;
+    --bg-light: #F8F9FA;
+    --bg-cream: #F5E6D3;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+    --success: #4CAF50;
+    --error: #F44336;
+    --warning: #FFC107;
+    --border-radius: 12px;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-light);
+    color: var(--text-dark);
+    min-height: 100vh;
+    padding-bottom: 2rem;
+}
+
+/* Navbar */
+.navbar {
+    background: var(--white);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    padding: 1rem 0;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn-back {
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: var(--bg-light);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    color: var(--purple-dark);
+}
+
+.btn-back:hover {
+    background: var(--purple-light);
+    transform: translateX(-2px);
+}
+
+.nav-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+/* Main Content */
+.main-content {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Status Card */
+.status-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+}
+
+.status-icon {
+    margin-bottom: 1.5rem;
+}
+
+.icon-circle {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple-medium) 0%, var(--purple-dark) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.icon-circle svg {
+    color: var(--white);
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(107, 17, 153, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(107, 17, 153, 0);
+    }
+}
+
+.status-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.status-description {
+    font-size: 1rem;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+}
+
+.order-number {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-cream);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+}
+
+.order-number .label {
+    font-size: 0.875rem;
+    color: var(--text-light);
+}
+
+.order-number .value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--purple-dark);
+}
+
+/* Timeline Card */
+.timeline-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.timeline-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 2.5rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 0.5rem;
+    bottom: 2rem;
+    width: 2px;
+    background: #e5e7eb;
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 2rem;
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -2.5rem;
+    top: 0.25rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: #e5e7eb;
+    border: 3px solid var(--white);
+    box-shadow: 0 0 0 2px #e5e7eb;
+    transition: var(--transition);
+    z-index: 1;
+}
+
+.timeline-item.active .timeline-dot {
+    background: var(--purple-medium);
+    box-shadow: 0 0 0 2px var(--purple-medium), 0 0 0 4px var(--purple-light);
+}
+
+.timeline-content h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+}
+
+.timeline-item.active .timeline-content h4 {
+    color: var(--purple-medium);
+}
+
+.timeline-content p {
+    font-size: 0.875rem;
+    color: var(--text-light);
+}
+
+/* Details Card */
+.details-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.details-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+}
+
+.restaurant-info {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--bg-cream);
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    border: 2px solid var(--cream);
+}
+
+.restaurant-image {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--border-radius);
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid var(--white);
+}
+
+.restaurant-image-fallback {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--border-radius);
+    background: linear-gradient(135deg, var(--purple-medium) 0%, var(--purple-dark) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+    border: 2px solid var(--white);
+}
+
+.restaurant-details {
+    flex: 1;
+}
+
+.restaurant-details h4 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--purple-dark);
+    margin-bottom: 0.5rem;
+}
+
+.restaurant-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.restaurant-meta p {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.restaurant-meta svg {
+    width: 16px;
+    height: 16px;
+    color: var(--purple-medium);
+}
+
+.restaurant-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: var(--white);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 600;
+    color: var(--purple-dark);
+    margin-top: 0.5rem;
+}
+
+.items-list {
+    margin-bottom: 1.5rem;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.item-image {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--border-radius);
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid var(--bg-light);
+}
+
+.item-image-fallback {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--border-radius);
+    background: linear-gradient(135deg, var(--bg-cream) 0%, var(--cream) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    border: 2px solid var(--bg-light);
+}
+
+.item-info {
+    flex: 1;
+}
+
+.item-info h4 {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+}
+
+.item-info p {
+    font-size: 0.875rem;
+    color: var(--text-light);
+}
+
+.item-price {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--purple-dark);
+    text-align: right;
+}
+
+.price-summary {
+    border-top: 2px solid var(--bg-light);
+    padding-top: 1rem;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    font-size: 0.9375rem;
+    color: var(--text-light);
+}
+
+.price-row.total {
+    font-size: 1.125rem;
+    color: var(--text-dark);
+    padding-top: 0.75rem;
+    border-top: 2px solid var(--bg-light);
+}
+
+.price-row.total strong {
+    color: var(--purple-dark);
+}
+
+/* Payment Card */
+.payment-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.payment-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.payment-method {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--bg-cream);
+    border-radius: var(--border-radius);
+    margin-bottom: 0.75rem;
+    border: 2px solid var(--cream);
+}
+
+.payment-method svg {
+    color: var(--purple-medium);
+}
+
+.payment-method span {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.payment-note {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    padding-left: 2.5rem;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn-outline {
+    background: var(--white);
+    color: var(--purple-dark);
+    border: 2px solid var(--purple-dark);
+}
+
+.btn-outline:hover {
+    background: var(--purple-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--purple-medium) 0%, var(--purple-dark) 100%);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(107, 17, 153, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .action-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .status-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .icon-circle {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .status-title {
+        font-size: 1.5rem;
+    }
+}

@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Pesanan - Platoo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/css/order-status.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <button class="btn-back" onclick="window.location.href='dashboard-pembeli.html'">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <h1 class="nav-title">Status Pesanan</h1>
+            <div style="width: 44px;"></div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Order Status Card -->
+            <div class="status-card">
+                <div class="status-icon" id="statusIcon">
+                    <div class="icon-circle">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <h2 class="status-title" id="statusTitle">Sedang Diproses</h2>
+                <p class="status-description" id="statusDescription">Pesanan Anda sedang diproses oleh restoran</p>
+                
+                <div class="order-number">
+                    <span class="label">Nomor Pesanan:</span>
+                    <span class="value" id="orderNumber">-</span>
+                </div>
+            </div>
+
+            <!-- Progress Timeline -->
+            <div class="timeline-card">
+                <h3 class="timeline-title">Timeline Pesanan</h3>
+                <div class="timeline">
+                    <div class="timeline-item active" data-status="dipesan">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>Pesanan Diterima</h4>
+                            <p id="timeOrdered">-</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-status="diproses">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>Sedang Diproses</h4>
+                            <p>Pesanan sedang disiapkan</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-status="siap">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>Siap Diambil</h4>
+                            <p>Pesanan siap untuk diambil</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-status="selesai">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>Selesai</h4>
+                            <p>Pesanan telah selesai</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Details -->
+            <div class="details-card">
+                <h3 class="details-title">Detail Pesanan</h3>
+                
+                <div class="restaurant-info" id="restaurantInfo">
+                    <!-- Will be populated by JS -->
+                </div>
+
+                <div class="items-list" id="itemsList">
+                    <!-- Will be populated by JS -->
+                </div>
+
+                <div class="price-summary">
+                    <div class="price-row">
+                        <span>Subtotal</span>
+                        <span id="subtotalAmount">Rp 0</span>
+                    </div>
+                    <div class="price-row total">
+                        <span>Total</span>
+                        <strong id="totalAmount">Rp 0</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Info -->
+            <div class="payment-card">
+                <h3 class="payment-title">Informasi Pembayaran</h3>
+                <div class="payment-method" id="paymentMethod">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                        <line x1="1" y1="10" x2="23" y2="10"/>
+                    </svg>
+                    <span>Tunai saat pengambilan</span>
+                </div>
+                <p class="payment-note">Pembayaran akan dilakukan saat pengambilan pesanan</p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-outline" id="orderAgainBtn" onclick="goToRestaurant()">
+                    Pesan Lagi
+                </button>
+                <button class="btn btn-primary" id="refreshBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="23 4 23 10 17 10"/>
+                        <polyline points="1 20 1 14 7 14"/>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                    </svg>
+                    Refresh Status
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/src/js/order-status.js?v=3"></script>
+</body>
+</html>

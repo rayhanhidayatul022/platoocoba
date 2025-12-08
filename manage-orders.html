@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Orders - Platoo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/css/manage-orders.css">
+</head>
+<body>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Back Button -->
+            <button class="btn-back" onclick="window.location.href='display-orders.html'">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </button>
+
+            <div class="page-header">
+                <h2>Ongoing Orders</h2>
+                <p class="subtitle">Manage your OnGoing orders</p>
+            </div>
+
+            <!-- Orders List -->
+            <div id="ordersContainer" class="orders-container">
+                <!-- Orders will be loaded here -->
+                <div class="loading">Memuat pesanan...</div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <h3>Tidak ada pesanan yang sedang berlangsung</h3>
+                <p>Pesanan ongoing dari pelanggan akan muncul di sini</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for Order Details -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Detail Pesanan</h3>
+            <div id="orderDetails"></div>
+            <div class="modal-actions">
+                <button class="btn-cancel" id="closeModal">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/src/js/manage-orders.js"></script>
+</body>
+</html>

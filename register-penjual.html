@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Restoran - Platoo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/css/register.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Section with Chef -->
+        <div class="welcome-section">
+            <div class="chef-container">
+                <img src="/src/img/animasi-chef.png" alt="Chef Platoo" class="chef-img">
+                <div class="speech-bubble">
+                    <h2>Daftar dulu yuk ke Platoo!</h2>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Register Box -->
+        <div class="register-box">
+            <div class="logo">
+                <img src="/src/img/logoPlatoo.png" alt="Platoo Logo">
+                <p class="tagline">Selamatkan Rasa, Selamatkan Bumi <strong>#StartFromYourPlate</strong></p>
+            </div>
+            
+            <h2 style="color: var(--purple-dark); text-align: center; margin-bottom: 30px; font-size: 24px;">Daftar Sebagai Restoran</h2>
+            
+            <!-- Registration Form -->
+            <form id="registerForm">
+                <input type="hidden" id="userRole" value="penjual">
+                <div class="form-group">
+                    <label for="namaRestoran">Nama Restoran</label>
+                    <input type="text" id="namaRestoran" name="namaRestoran" placeholder="Nama restoran Anda (sebagai username)" required>
+                    <small>Nama restoran akan menjadi username Anda dan harus unik</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Restoran</label>
+                    <input type="email" id="email" name="email" placeholder="contoh@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="telepon">Nomor Telepon Restoran</label>
+                    <input type="tel" id="telepon" name="telepon" placeholder="08xxxxxxxxxx" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="alamat">Alamat Restoran</label>
+                    <textarea id="alamat" name="alamat" rows="3" placeholder="Masukkan alamat lengkap restoran" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="fotoRestoran">Foto Restoran</label>
+                    <input type="file" id="fotoRestoran" name="fotoRestoran" accept="image/*" required>
+                    <small>Upload foto restoran Anda (JPG, PNG, max 5MB)</small>
+                    <div id="imagePreview" style="margin-top: 10px; display: none;">
+                        <img id="previewImg" src="" alt="Preview" style="max-width: 100%; max-height: 200px; border-radius: 8px; object-fit: cover;">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Minimal 6 karakter" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Konfirmasi Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Ulangi password Anda" required>
+                </div>
+                
+                <button type="submit" class="btn-submit">Daftar</button>
+            </form>
+            
+            <div class="login-link">
+                Sudah punya akun? <a href="login.html">Login di sini</a>
+            </div>
+            <a href="register-pembeli.html" class="btn-back" style="display: block; text-align: center; margin-top: 15px; text-decoration: none;">
+                Daftar sebagai Pembeli
+            </a>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/src/js/register.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfirmasi Pembayaran - Platoo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/css/payment-confirmation.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div style="width: 44px;"></div>
+            <h1 class="nav-title">Konfirmasi Pembayaran</h1>
+            <div style="width: 44px;"></div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Payment Instructions Card -->
+            <div class="payment-card" id="paymentInstructions">
+                <div class="payment-icon">
+                    <div class="icon-circle">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                            <line x1="1" y1="10" x2="23" y2="10"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <h2 class="payment-title" id="paymentTitle">Pembayaran Virtual Account</h2>
+                <p class="payment-subtitle">Silakan transfer ke nomor virtual account berikut:</p>
+
+                <!-- Virtual Account Number -->
+                <div class="va-number-card" id="vaNumberCard" style="display: none;">
+                    <div class="bank-logo">
+                        <span id="bankLogo">🏦</span>
+                    </div>
+                    <div class="va-details">
+                        <label>Nomor Virtual Account</label>
+                        <div class="va-number" id="vaNumber">8808 1234 5678 9012</div>
+                        <button class="btn-copy" onclick="copyVANumber()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                            Salin
+                        </button>
+                    </div>
+                </div>
+
+                <!-- E-Wallet QR Code -->
+                <div class="qr-card" id="qrCard" style="display: none;">
+                    <div class="qr-code">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PLATOO_PAYMENT" alt="QR Code">
+                    </div>
+                    <p class="qr-instruction">Scan QR Code dengan aplikasi QRIS Anda</p>
+                </div>
+
+                <!-- Total Amount -->
+                <div class="amount-card">
+                    <div class="amount-label">Total Pembayaran</div>
+                    <div class="amount-value" id="totalAmount">Rp 0</div>
+                </div>
+
+                <!-- Payment Steps -->
+                <div class="payment-steps">
+                    <h3>Cara Pembayaran:</h3>
+                    <ol id="paymentStepsList">
+                        <li>Buka aplikasi mobile banking Anda</li>
+                        <li>Pilih menu Transfer atau Bayar</li>
+                        <li>Masukkan nomor virtual account di atas</li>
+                        <li>Pastikan nominal transfer sesuai</li>
+                        <li>Konfirmasi dan selesaikan pembayaran</li>
+                    </ol>
+                </div>
+
+                <!-- Timer -->
+                <div class="payment-timer">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    <span>Selesaikan pembayaran dalam: <strong id="countdown">15:00</strong></span>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-outline" onclick="cancelPayment()">
+                        Ganti Pembayaran
+                    </button>
+                    <button class="btn btn-primary" id="confirmPaymentBtn" onclick="confirmPayment()">
+                        Saya Sudah Bayar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Success State (Hidden initially) -->
+            <div class="success-card" id="successCard" style="display: none;">
+                <div class="success-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                </div>
+                <h2>Pembayaran Berhasil!</h2>
+                <p>Terima kasih, pembayaran Anda telah dikonfirmasi</p>
+                <div class="success-details">
+                    <div class="detail-row">
+                        <span>Nomor Pesanan:</span>
+                        <strong id="successOrderNumber">-</strong>
+                    </div>
+                    <div class="detail-row">
+                        <span>Metode Pembayaran:</span>
+                        <strong id="successPaymentMethod">-</strong>
+                    </div>
+                    <div class="detail-row">
+                        <span>Total Dibayar:</span>
+                        <strong id="successAmount">-</strong>
+                    </div>
+                </div>
+                <p class="redirect-message">Anda akan diarahkan ke halaman status pesanan...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Cancel Confirmation Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="hideCancelModal()"></div>
+    <div class="cancel-modal" id="cancelModal">
+        <div class="modal-icon">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="15" y1="9" x2="9" y2="15"/>
+                <line x1="9" y1="9" x2="15" y2="15"/>
+            </svg>
+        </div>
+        <h3 class="modal-title">Batalkan Pembayaran?</h3>
+        <p class="modal-message">Apakah Anda yakin ingin membatalkan pembayaran? Pesanan Anda akan tetap tersimpan dan dapat dilanjutkan nanti.</p>
+        <div class="modal-actions">
+            <button class="btn-modal btn-cancel" onclick="hideCancelModal()">Tidak</button>
+            <button class="btn-modal btn-confirm" onclick="confirmCancel()">Ya, Batalkan</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="/src/js/email-service.js"></script>
+    <script src="/src/js/payment-confirmation.js"></script>
+</body>
+</html>

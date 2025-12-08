@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Platoo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/css/login.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Section with Chef -->
+        <div class="welcome-section">
+            <div class="chef-container">
+                <img src="/src/img/animasi-chef.png" alt="Chef Platoo" class="chef-img">
+                <div class="speech-bubble">
+                    <h2>Welcome to Platoo!</h2>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Login Box -->
+        <div class="login-box">
+            <div class="logo">
+                <img src="/src/img/logoPlatoo.png" alt="Platoo Logo">
+                <p class="tagline">Selamatkan Rasa, Selamatkan Bumi <strong>#StartFromYourPlate</strong></p>
+            </div>
+            
+            <!-- Role Selection -->
+            <div class="role-tabs">
+                <button class="tab-btn active" data-role="pembeli">
+                    <img src="/src/img/pembeli-type.png" alt="Pembeli Icon" class="tab-icon">
+                    <span>Pembeli</span>
+                </button>
+                <button class="tab-btn" data-role="penjual">
+                    <img src="/src/img/resto-type.png" alt="Restoran Icon" class="tab-icon">
+                    <span>Restoran</span>
+                </button>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm">
+                <input type="hidden" id="userRole" value="pembeli">
+                
+                <div class="form-group">
+                    <label for="username" id="usernameLabel">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Masukkan username Anda" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Masukkan password Anda" required>
+                </div>
+                
+                <div class="forgot-password">
+                    <a href="forgot-password.html">Lupa password?</a>
+                </div>
+                
+                <button type="submit" class="btn-submit">Login</button>
+            </form>
+            
+            <div class="register-link">
+                Belum punya akun? <a href="register.html">Daftar di sini</a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/src/js/login.js"></script>
+</body>
+</html>
