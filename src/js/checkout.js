@@ -1,7 +1,6 @@
-﻿// Supabase Configuration
-const SUPABASE_URL = 'https://nxamzwahwgakiatujxug.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54YW16d2Fod2dha2lhdHVqeHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDkwMjcsImV4cCI6MjA4MDU4NTAyN30.9nBRbYXKJmLcWbKcx0iICDNisdQNCg0dFjI_JGVt5pk';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+﻿const SUPABASE_URL = 'https://nxamzwahwgakiatujxug.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54YW16d2Fod2dha2lhdHVqeHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDkwMjcsImV4cCI6MjA4MDU4NTAyN30.9nBRbYXKJmLcWbKcx0iICDNisdQNCg0dFjI_JGVt5pk';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Constants
 const SERVICE_FEE = 5000; // Rp 5,000
@@ -55,7 +54,7 @@ async function initializeCheckout() {
         // Fetch email from pembeli table
         const userId = currentUser.id || currentUser.id_pembeli || currentUser.pembeli_id;
         if (userId) {
-            const { data: pembeliData, error: pembeliError } = await supabase
+            const { data: pembeliData, error: pembeliError } = await supabaseClient
                 .from('pembeli')
                 .select('email, nama')
                 .eq('id_pembeli', userId)
@@ -195,7 +194,7 @@ async function initializeCheckout() {
 
 async function fetchRestaurantInfo() {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('restoran')
             .select('id_penjual, nama_restoran, alamat, nomor_telepon, foto_url, rate')
             .eq('id_penjual', orderData.restaurantId)
@@ -234,7 +233,7 @@ async function fetchItemPhotos() {
         const itemIds = orderData.items.map(item => item.id);
         console.log('Item IDs to fetch:', itemIds);
         
-        if (!supabase) {
+        if (!supabaseClient) {
             console.error('❌ Supabase is not initialized!');
             return;
         }
@@ -242,7 +241,7 @@ async function fetchItemPhotos() {
         console.log('Fetching from Supabase catalog table...');
         
         // Fetch from catalog table - gunakan catalog_id sebagai PK
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('catalog')
             .select('*')
             .in('catalog_id', itemIds);
@@ -300,7 +299,7 @@ async function fetchItemPhotos() {
 
 async function loadCustomerInfo(userId) {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('users')
             .select('full_name, email')
             .eq('id', userId)
@@ -326,7 +325,7 @@ async function loadAvailableVouchers() {
         console.log('📅 Today date for comparison:', today);
 
         // Filter vouchers by restaurant ID
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('voucher')
             .select('*')
             .eq('resto_id', orderData.restaurantId);
@@ -971,7 +970,7 @@ async function createOrder() {
         console.log('✅ User ID (converted to int):', userId, typeof userId);
         
         // Get max order_id dari database untuk auto-increment manual
-        const { data: maxOrderData } = await supabase
+        const { data: maxOrderData } = await supabaseClient
             .from('orders')
             .select('order_id')
             .order('order_id', { ascending: false })
@@ -1002,7 +1001,7 @@ async function createOrder() {
         }
         
         // Insert semua orders sekaligus
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('orders')
             .insert(orderInserts);
 
@@ -1025,7 +1024,7 @@ async function createOrder() {
 async function updateFoodStock() {
     try {
         for (const item of orderData.items) {
-            const { data: food } = await supabase
+            const { data: food } = await supabaseClient
                 .from('catalog')
                 .select('stok')
                 .eq('catalog_id', item.id)
@@ -1033,7 +1032,7 @@ async function updateFoodStock() {
 
             if (food) {
                 const newStok = Math.max(0, food.stok - item.quantity);
-                await supabase
+                await supabaseClient
                     .from('catalog')
                     .update({ stok: newStok })
                     .eq('catalog_id', item.id);
@@ -1057,7 +1056,7 @@ async function updateVoucherStock() {
         console.log('Updating voucher stock for voucher ID:', voucherId);
 
         // Get current stock
-        const { data: voucher, error: fetchError } = await supabase
+        const { data: voucher, error: fetchError } = await supabaseClient
             .from('voucher')
             .select('stok')
             .eq('voucher_id', voucherId)
@@ -1075,7 +1074,7 @@ async function updateVoucherStock() {
             console.log('Calculated new stock:', newStok);
             console.log('Executing UPDATE query with:', { stok: newStok, voucher_id: voucherId });
             
-            const { data: updateData, error: updateError } = await supabase
+            const { data: updateData, error: updateError } = await supabaseClient
                 .from('voucher')
                 .update({ stok: newStok })
                 .eq('voucher_id', voucherId)

@@ -1,11 +1,7 @@
 ﻿const SUPABASE_URL = 'https://nxamzwahwgakiatujxug.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54YW16d2Fod2dha2lhdHVqeHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDkwMjcsImV4cCI6MjA4MDU4NTAyN30.9nBRbYXKJmLcWbKcx0iICDNisdQNCg0dFjI_JGVt5pk';
 
-console.log('Register.js loaded!');
-console.log('Supabase client:', window.supabase);
-
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-console.log('Supabase initialized:', supabase);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let selectedRole = null;
 
@@ -167,7 +163,7 @@ async function registerPembeli() {
     }
     
     // Cek apakah username atau email sudah ada
-    const { data: existingUser } = await supabase
+    const { data: existingUser } = await supabaseClient
         .from('pembeli')
         .select('username, email')
         .or(`username.eq.${username},email.eq.${email}`)
@@ -183,7 +179,7 @@ async function registerPembeli() {
     }
     
     // Insert data pembeli
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from('pembeli')
         .insert([
             {
@@ -251,7 +247,7 @@ async function registerPenjual() {
     }
 
     // Cek apakah nama restoran (username) atau email sudah ada
-    const { data: existingRestoran } = await supabase
+    const { data: existingRestoran } = await supabaseClient
         .from('restoran')
         .select('nama_restoran, email')
         .or(`nama_restoran.eq.${namaRestoran},email.eq.${email}`)
@@ -274,7 +270,7 @@ async function registerPenjual() {
         const fileName = `${namaRestoran.replace(/\s+/g, '_')}_${Date.now()}.${fileExt}`;
         const filePath = `restoran/${fileName}`;
 
-        const { error: uploadError } = await supabase.storage
+        const { error: uploadError } = await supabaseClient.storage
             .from('resto-photos')
             .upload(filePath, fotoFile, {
                 cacheControl: '3600',
@@ -288,7 +284,7 @@ async function registerPenjual() {
         }
 
         // Dapatkan public URL
-        const { data: urlData } = supabase.storage
+        const { data: urlData } = supabaseClient.storage
             .from('resto-photos')
             .getPublicUrl(filePath);
 
@@ -296,7 +292,7 @@ async function registerPenjual() {
     }
 
     // Insert data penjual
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from('restoran')
         .insert([
             {

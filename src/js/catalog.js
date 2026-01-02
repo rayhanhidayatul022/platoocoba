@@ -1,7 +1,7 @@
 ﻿const SUPABASE_URL = 'https://nxamzwahwgakiatujxug.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54YW16d2Fod2dha2lhdHVqeHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDkwMjcsImV4cCI6MjA4MDU4NTAyN30.9nBRbYXKJmLcWbKcx0iICDNisdQNCg0dFjI_JGVt5pk';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let currentRestaurant = null;
 let allMenuItems = [];
@@ -77,7 +77,7 @@ function setupEventListeners() {
 
 async function loadRestaurantInfo() {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('restoran')
             .select('*')
             .eq('id_penjual', restaurantId)
@@ -148,7 +148,7 @@ async function loadMenuItems() {
 
         // First, check if catalog table has ANY data
         console.log('Test 1: Checking if catalog table has any data...');
-        const { data: allCatalog, error: allError } = await supabase
+        const { data: allCatalog, error: allError } = await supabaseClient
             .from('catalog')
             .select('*')
             .eq('is_aktif', true);
@@ -173,7 +173,7 @@ async function loadMenuItems() {
         // Try to fetch specific restaurant's menu
         console.log('Test 3: Fetching menu for resto_id =', restoId);
         
-        const { data: menuItems, error } = await supabase
+        const { data: menuItems, error } = await supabaseClient
             .from('catalog')
             .select('*')
             .eq('resto_id', restoId)

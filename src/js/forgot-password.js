@@ -1,7 +1,6 @@
-﻿// Initialize Supabase
-const SUPABASE_URL = 'https://nxamzwahwgakiatujxug.supabase.co';
+﻿const SUPABASE_URL = 'https://nxamzwahwgakiatujxug.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54YW16d2Fod2dha2lhdHVqeHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDkwMjcsImV4cCI6MjA4MDU4NTAyN30.9nBRbYXKJmLcWbKcx0iICDNisdQNCg0dFjI_JGVt5pk';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 console.log('✅ Supabase initialized for forgot-password');
 
@@ -38,7 +37,7 @@ document.getElementById('forgotPasswordForm').addEventListener('submit', async (
     
     try {
         // Check pembeli table by username
-        let { data: pembeliData, error: pembeliError } = await supabase
+        let { data: pembeliData, error: pembeliError } = await supabaseClient
             .from('pembeli')
             .select('nama, password, email, username')
             .eq('username', username)
@@ -53,7 +52,7 @@ document.getElementById('forgotPasswordForm').addEventListener('submit', async (
         let userType = 'Pembeli';
         
         if (!userData) {
-            let { data: restoranData, error: restoranError } = await supabase
+            let { data: restoranData, error: restoranError } = await supabaseClient
                 .from('restoran')
                 .select('nama_restoran, password, email')
                 .eq('nama_restoran', username)

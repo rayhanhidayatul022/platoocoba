@@ -1,7 +1,7 @@
 ﻿const SUPABASE_URL = 'https://nxamzwahwgakiatujxug.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54YW16d2Fod2dha2lhdHVqeHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDkwMjcsImV4cCI6MjA4MDU4NTAyN30.9nBRbYXKJmLcWbKcx0iICDNisdQNCg0dFjI_JGVt5pk';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let allRestaurants = [];
 let currentFilter = 'all';
@@ -72,7 +72,7 @@ async function loadRestaurants() {
         restaurantGrid.innerHTML = '';
         
         // Fetch restaurants from Supabase
-        const { data: restaurants, error } = await supabase
+        const { data: restaurants, error } = await supabaseClient
             .from('restoran')
             .select('*')
             .order('created_at', { ascending: false });

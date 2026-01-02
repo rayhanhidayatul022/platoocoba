@@ -1,7 +1,7 @@
 ﻿const SUPABASE_URL = 'https://nxamzwahwgakiatujxug.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54YW16d2Fod2dha2lhdHVqeHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDkwMjcsImV4cCI6MjA4MDU4NTAyN30.9nBRbYXKJmLcWbKcx0iICDNisdQNCg0dFjI_JGVt5pk';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let currentUser = null;
 
@@ -37,7 +37,7 @@ async function loadOrderHistory() {
         orderList.innerHTML = '';
         
         // Fetch orders from Supabase for current user
-        const { data: orders, error } = await supabase
+        const { data: orders, error } = await supabaseClient
             .from('orders')
             .select('*')
             .eq('id_pembeli', currentUser.id)
@@ -59,7 +59,7 @@ async function loadOrderHistory() {
         
         // Fetch catalog data untuk nama menu
         const catalogIds = [...new Set(orders.map(o => o.catalog_id))];
-        const { data: catalogItems, error: catalogError } = await supabase
+        const { data: catalogItems, error: catalogError } = await supabaseClient
             .from('catalog')
             .select('catalog_id, nama_makanan');
         

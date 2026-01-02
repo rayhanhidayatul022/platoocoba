@@ -1,7 +1,7 @@
 ﻿const SUPABASE_URL = 'https://nxamzwahwgakiatujxug.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54YW16d2Fod2dha2lhdHVqeHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDkwMjcsImV4cCI6MjA4MDU4NTAyN30.9nBRbYXKJmLcWbKcx0iICDNisdQNCg0dFjI_JGVt5pk';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 function showModal(title, message, type = 'success', showCancel = false) {
     return new Promise((resolve) => {
@@ -73,7 +73,7 @@ async function getVoucherIdFromUrl(){
 
 async function fetchVoucherData(voucherId) {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('voucher')
             .select('*')
             .eq('voucher_id', voucherId)
@@ -129,7 +129,7 @@ async function handleSubmit(e) {
         };
         
         console.log('Updating to database...');
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('voucher')
             .update(updateData)
             .eq('voucher_id', catalogId);

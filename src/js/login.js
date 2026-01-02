@@ -1,7 +1,7 @@
 ﻿const SUPABASE_URL = 'https://nxamzwahwgakiatujxug.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54YW16d2Fod2dha2lhdHVqeHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDkwMjcsImV4cCI6MjA4MDU4NTAyN30.9nBRbYXKJmLcWbKcx0iICDNisdQNCg0dFjI_JGVt5pk';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let currentRole = 'pembeli';
 
@@ -69,7 +69,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
 async function loginPembeli(username, password) {
     // Cek apakah username ada
-    const { data: checkUser } = await supabase
+    const { data: checkUser } = await supabaseClient
         .from('pembeli')
         .select('*')
         .eq('username', username)
@@ -81,7 +81,7 @@ async function loginPembeli(username, password) {
     }
     
     // Cek password
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from('pembeli')
         .select('*')
         .eq('username', username)
@@ -111,7 +111,7 @@ async function loginPembeli(username, password) {
 
 async function loginPenjual(namaRestoran, password) {
     // Cek apakah restoran ada
-    const { data: checkRestoran } = await supabase
+    const { data: checkRestoran } = await supabaseClient
         .from('restoran')
         .select('*')
         .eq('nama_restoran', namaRestoran)
@@ -123,7 +123,7 @@ async function loginPenjual(namaRestoran, password) {
     }
     
     // Cek password
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from('restoran')
         .select('*')
         .eq('nama_restoran', namaRestoran)
@@ -135,15 +135,13 @@ async function loginPenjual(namaRestoran, password) {
         return;
     }
     
-    const userData = {
-        id: data.id_penjual,  // Coba kedua kemungkinan
+    // Simpan data user ke localStorage
+    localStorage.setItem('platoo_user', JSON.stringify({
+        id: data.id_penjual, // Menggunakan id_penjual agar konsisten
         nama_restoran: data.nama_restoran,
         alamat: data.alamat,
         role: 'penjual'
-    };
-    
-    localStorage.setItem('platoo_user', JSON.stringify(userData));
-    localStorage.setItem('resto_id', userData.id);
+    }));
     
     showMessage('Login berhasil! Mengalihkan...', 'success');
     

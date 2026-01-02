@@ -1,7 +1,6 @@
-﻿// Supabase Configuration
-const SUPABASE_URL = 'https://nxamzwahwgakiatujxug.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54YW16d2Fod2dha2lhdHVqeHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDkwMjcsImV4cCI6MjA4MDU4NTAyN30.9nBRbYXKJmLcWbKcx0iICDNisdQNCg0dFjI_JGVt5pk';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+﻿const SUPABASE_URL = 'https://nxamzwahwgakiatujxug.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54YW16d2Fod2dha2lhdHVqeHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDkwMjcsImV4cCI6MjA4MDU4NTAyN30.9nBRbYXKJmLcWbKcx0iICDNisdQNCg0dFjI_JGVt5pk';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // State
 let orderData = null;
@@ -143,7 +142,7 @@ async function loadOrderStatus() {
         console.log('Loading orders:', orderIds);
 
         // Fetch orders from database
-        const { data: orders, error: ordersError } = await supabase
+        const { data: orders, error: ordersError } = await supabaseClient
             .from('orders')
             .select('*')
             .in('order_id', orderIds);
@@ -159,7 +158,7 @@ async function loadOrderStatus() {
 
         // Get catalog items
         const catalogIds = orders.map(o => o.catalog_id);
-        const { data: catalogItems, error: catalogError } = await supabase
+        const { data: catalogItems, error: catalogError } = await supabaseClient
             .from('catalog')
             .select('*')
             .in('catalog_id', catalogIds);
@@ -168,7 +167,7 @@ async function loadOrderStatus() {
 
         // Get restaurant info from first order
         const firstCatalogItem = catalogItems[0];
-        const { data: restaurant, error: restoError } = await supabase
+        const { data: restaurant, error: restoError } = await supabaseClient
             .from('restoran')
             .select('*')
             .eq('id_penjual', firstCatalogItem.resto_id)

@@ -1,7 +1,7 @@
 ﻿const SUPABASE_URL = 'https://nxamzwahwgakiatujxug.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54YW16d2Fod2dha2lhdHVqeHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDkwMjcsImV4cCI6MjA4MDU4NTAyN30.9nBRbYXKJmLcWbKcx0iICDNisdQNCg0dFjI_JGVt5pk';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let restaurantId = null;
 let currentOrderId = null;
@@ -44,7 +44,7 @@ async function loadOrder() {
 
     try {
         // Load single order by ID
-        const { data: order, error } = await supabase
+        const { data: order, error } = await supabaseClient
             .from('orders')
             .select(`
                 *,
@@ -158,7 +158,7 @@ async function saveStatusChange(orderId) {
         btnSave.disabled = true;
         btnSave.textContent = '⏳ Menyimpan...';
 
-        const { error } = await supabase
+        const { error } = await supabaseClient
             .from('orders')
             .update({ status_pesanan: newStatus })
             .eq('order_id', orderId);
