@@ -74,7 +74,7 @@ async function getCatalogIdFromUrl(){
 
 async function fetchFoodData(catalogId) {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('catalog')
             .select('*')
             .eq('catalog_id', catalogId)
@@ -103,13 +103,13 @@ async function uploadImage(file, restoId) {
     try {
         const fileName = `${restoId}_${Date.now()}_${file.name}`;
         
-        const { data, error } = await supabase.storage
+        const { data, error } = await supabaseClient.storage
             .from('resto-photos/katalog')
             .upload(fileName, file);
         
         if (error) throw error;
 
-        const { data: urlData } = supabase.storage
+        const { data: urlData } = supabaseClient.storage
             .from('resto-photos/katalog')
             .getPublicUrl(fileName);
         
@@ -159,7 +159,7 @@ async function handleSubmit(e) {
         }
         
         console.log('Updating database...');
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('catalog')
             .update(updateData)
             .eq('catalog_id', parseInt(catalogId));
